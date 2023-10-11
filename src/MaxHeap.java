@@ -1,76 +1,113 @@
 import java.util.Scanner;
 
-public class MaxHeap {
-    BinaryNode<Integer> root;
+class BinaryNodeRe<T extends Comparable<T>> {
+    T data;
+    BinaryNodeRe<T> leftNode;
+    BinaryNodeRe<T> rightNode;
 
-    // Constructor with no parameters
+    public BinaryNodeRe(T item) {
+        this.data = item;
+        this.leftNode = null;
+        this.rightNode = null;
+    }
+
+    public BinaryNodeRe(T item, BinaryNodeRe<T> leftNode, BinaryNodeRe<T> rightNode) {
+        this.data = item;
+        this.leftNode = leftNode;
+        this.rightNode = rightNode;
+    }
+
+    public T getData() {
+        return this.data;
+    }
+
+    public BinaryNodeRe<T> getLeft() {
+        return this.leftNode;
+    }
+
+    public BinaryNodeRe<T> getRight() {
+        return this.rightNode;
+    }
+
+    public void setData(T newData) {
+        this.data = newData;
+    }
+
+    public void postOrderTraversal(BinaryNodeRe<T> node) {
+        if (node != null) {
+            postOrderTraversal(node.getLeft());
+            postOrderTraversal(node.getRight());
+            System.out.print(node.getData() + " ");
+        }
+    }
+}
+
+public class MaxHeap<T extends Comparable<T>> {
+    private BinaryNodeRe<T> root;
+
     public MaxHeap() {
-        root = null;
+        this.root = null;
     }
 
-    // Constructor with one parameter of type BinaryNode<Integer>
-    public MaxHeap(BinaryNode<Integer> root) {
-        this.root = root;
-    }
+    public void insertMaxHeap(T element) {
+        if (element == null) {
+            return; // Don't insert null elements.
+        }
 
-    // Insert a new node into the max heap
-    public void insertNode(BinaryNode<Integer> newNode) {
-        // Check if the root node is null
+        BinaryNodeRe<T> newNode = new BinaryNodeRe<>(element);
+
         if (root == null) {
             root = newNode;
+        } else {
+            insert(root, newNode);
+        }
+    }
+
+    private void insert(BinaryNodeRe<T> current, BinaryNodeRe<T> newNode) {
+        if (current == null) {
             return;
         }
 
-        // Recursively insert the new node
-        insertNode(root, newNode);
+        if (newNode.getData().compareTo(current.getData()) > 0) {
+            T temp = newNode.getData();
+            newNode.setData(current.getLeft().getData());
+            current.setData(temp);
+        }
+
+        if (current.getLeft() == null) {
+            current.leftNode = newNode;
+            return;
+        }  else if (current.getRight() == null) {
+            current.rightNode = newNode;
+            return;
+        }
+
+        if (current.getLeft().getData().compareTo(newNode.getData()) > 0) {
+            insert(current.getLeft(), newNode);
+        } else if (current.getRight().getData().compareTo(newNode.getData()) > 0) {
+            insert(current.getRight(), newNode);
+        }
     }
 
-    // recursive insertNode
-    private void insertNode(BinaryNode<Integer> currentNode, BinaryNode<Integer> newNode) {
-        if (newNode.getData() > currentNode.getData()) {
-            // Swap the new node with the current node
-            int temp = newNode.getData();
-            newNode.setData(currentNode.getData());
-            currentNode.setData(temp);
-        }
+    public static void main(String[] args) {
+        MaxHeap<Integer> maxHeap = new MaxHeap<>();
+        Scanner scanner = new Scanner(System.in);
 
-        // Count the number of nodes in the left and right subtrees
-        int leftHeight = countSubtree(currentNode.getLeft());
-        int rightHeight = countSubtree(currentNode.getRight());
+        while (true) {
+            System.out.print("Enter an integer to insert into the Max Heap (or -1 to exit): ");
+            int input = scanner.nextInt();
 
-        // Move to the child node
-        if (leftHeight <= rightHeight) {
-            // Insert the new node into the left subtree
-            if (currentNode.getLeft() == null) {
-                currentNode.setLeft(newNode);
-                return;
+            if (input == -1) {
+                break;
             }
-            currentNode = currentNode.getLeft();
-        } else {
-            // Insert the new node into the right subtree
-            if (currentNode.getRight() == null) {
-                currentNode.setRight(newNode);
-                return;
-            }
-            currentNode = currentNode.getRight();
+
+            maxHeap.insertMaxHeap(input);
+
+            System.out.print("Post-order traversal after insertion: ");
+            maxHeap.root.postOrderTraversal(maxHeap.root);
+            System.out.println();
         }
 
-        // Check if current node is null after moving to the child node
-        if (currentNode == null) {
-            return; // No more nodes to traverse
-        }
-
-        // Recursively insert the new node
-        insertNode(currentNode, newNode);
-    }
-
-    // Balance the max heap
-    public int countSubtree(BinaryNode<?> node){
-        if(node == null) {
-            return 0;
-        }
-
-        // Return the number of nodes in the subtree
-        return 1 + countSubtree(node.getLeft()) + countSubtree(node.getRight());
+        scanner.close();
     }
 }
