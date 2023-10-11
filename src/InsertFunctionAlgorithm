@@ -1,0 +1,6 @@
+1. Start at the bottom level of the heap (i.e., the last leaf node on the last level).
+2. Insert the new element in the last position of the heap.
+3. Compare the newly inserted element with its parent.
+4. If the parent is smaller than the newly inserted element, swap them.
+5. Repeat step 3 and step 4 until the heap property is restored (i.e., the parent is not smaller than the newly
+inserted element) or until the newly inserted element reaches the root of the heap.
