@@ -40,13 +40,6 @@ class BinaryNodeRe<T extends Comparable<T>> {
             System.out.print(node.getData() + " ");
         }
     }
-
-    // Create a toString method for BinaryNodeRe and its children
-    @Override
-    public String toString() {
-        return "BinaryNodeRe [data=" + data + ", leftNode=" + leftNode + ", rightNode=" + rightNode + "]";
-    }
-
 }
 
 public class MaxHeap<T extends Comparable<T>> {
