@@ -40,6 +40,13 @@ class BinaryNodeRe<T extends Comparable<T>> {
             System.out.print(node.getData() + " ");
         }
     }
+
+    // Create a toString method for BinaryNodeRe and its children
+    @Override
+    public String toString() {
+        return "BinaryNodeRe [data=" + data + ", leftNode=" + leftNode + ", rightNode=" + rightNode + "]";
+    }
+
 }
 
 public class MaxHeap<T extends Comparable<T>> {
@@ -70,7 +77,7 @@ public class MaxHeap<T extends Comparable<T>> {
 
         if (newNode.getData().compareTo(current.getData()) > 0) {
             T temp = newNode.getData();
-            newNode.setData(current.getLeft().getData());
+            newNode.setData(current.getData());
             current.setData(temp);
         }
 
@@ -82,12 +89,13 @@ public class MaxHeap<T extends Comparable<T>> {
             return;
         }
 
-        if (current.getLeft().getData().compareTo(newNode.getData()) > 0) {
+        if (newNode.getData().compareTo(current.getLeft().getData()) > 0) {
             insert(current.getLeft(), newNode);
-        } else if (current.getRight().getData().compareTo(newNode.getData()) > 0) {
+        } else {
             insert(current.getRight(), newNode);
         }
     }
+
 
     public static void main(String[] args) {
         MaxHeap<Integer> maxHeap = new MaxHeap<>();
@@ -103,7 +111,7 @@ public class MaxHeap<T extends Comparable<T>> {
 
             maxHeap.insertMaxHeap(input);
 
-            System.out.print("Post-order traversal after insertion: ");
+            System.out.println("Post-order traversal after insertion: ");
             maxHeap.root.postOrderTraversal(maxHeap.root);
             System.out.println();
         }
