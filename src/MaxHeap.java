@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 class BinaryNodeRevamped<T extends Comparable<T>> {
@@ -62,84 +60,66 @@ class BinaryNodeRevamped<T extends Comparable<T>> {
             System.out.print(root.getData() + " ");
         }
     }
+
+    public void setLeft(BinaryNodeRevamped<T> tBinaryNodeRevamped) {
+        this.leftNode = tBinaryNodeRevamped;
+    }
+
+    public void setRight(BinaryNodeRevamped<T> tBinaryNodeRevamped) {
+        this.rightNode = tBinaryNodeRevamped;
+    }
+
+    // Create toString() method that also returns the left and right children as well for BinaryNodeRevamped<T> class
+    @Override
+    public String toString() {
+        return "BinaryNodeRevamped{" +
+                "data=" + data +
+                ", leftNode=" + leftNode +
+                ", rightNode=" + rightNode +
+                '}';
+    }
 }
 
 public class MaxHeap<T extends Comparable<T>> {
     private BinaryNodeRevamped<T> root;
 
-    public MaxHeap() {
-        this.root = null;
-    }
+    // Other constructors and methods...
 
-    public void insertMaxHeap(T element) {
-        BinaryNodeRevamped<T> newNode = new BinaryNodeRevamped<>(element);
+    public void insert(T data) {
+        BinaryNodeRevamped<T> newNode = new BinaryNodeRevamped<>(data);
 
         if (root == null) {
             root = newNode;
         } else {
-            insertMaxHeap(root, newNode);
+            insertRecursive(root, newNode);
         }
     }
 
-    private void insertMaxHeap(BinaryNodeRevamped<T> current, BinaryNodeRevamped<T> newNode) {
-        while (current != null) {
-            if (current.getData().compareTo(newNode.getData()) < 0) {
-                T temp = newNode.getData();
-                newNode.setData(current.getData());
-                current.setData(temp);
-            }
-            if (current.getLeft() != null && current.getRight() != null) {
-                if (current.getLeft().getData().compareTo(current.getRight().getData()) > 0) {
-                    current = current.getLeft();
-                } else {
-                    current = current.getRight();
-                }
-            } else if (current.getLeft() != null) {
-                current = current.getLeft();
+    private void insertRecursive(BinaryNodeRevamped<T> current, BinaryNodeRevamped<T> newNode) {
+        // Maintain the MaxHeap property by swapping if necessary
+        if (current.getData().compareTo(newNode.getData()) < 0) {
+            T temp = newNode.getData();
+            newNode.setData(current.getData());
+            current.setData(temp);
+        }
+
+        if (current.getLeft() == null) {
+            // If the left child is null, insert the newNode here
+            current.setLeft(newNode);
+        } else if (current.getRight() == null) {
+            // If the right child is null, insert the newNode here
+            current.setRight(newNode);
+        } else {
+            // Both left and right children exist; compare with both
+            if (current.getLeft().getData().compareTo(current.getRight().getData()) > 0) {
+                // The left child is smaller, so insert there
+                insertRecursive(current.getLeft(), newNode);
             } else {
-                current = current.getRight();
+                // The right child is smaller, so insert there
+                insertRecursive(current.getRight(), newNode);
             }
-            insertMaxHeap(current, newNode);
         }
     }
-
-//    public void insertMaxHeap(BinaryNodeRevamped<T> root, T value) {
-//        BinaryNodeRevamped<T> newNode = new BinaryNodeRevamped<>(value);
-//
-//        if (root == null) {
-//            this.data = value;
-//            return;
-//        }
-//
-//        List<BinaryNodeRevamped<T>> queue = new ArrayList<>();
-//        queue.add(root);
-//
-//        while (!queue.isEmpty()) {
-//            BinaryNodeRevamped<T> currentNode = queue.get(0);
-//
-//            if (currentNode.getLeft() == null) {
-//                currentNode.leftNode = newNode;
-//                break;
-//            } else if (currentNode.getRight() == null) {
-//                currentNode.rightNode = newNode;
-//                break;
-//            } else {
-//                queue.add(currentNode.getLeft());
-//                queue.add(currentNode.getRight());
-//            }
-//
-//            queue.remove(0);
-//        }
-//
-//        BinaryNodeRevamped<T> parent = newNode.getParent(root);
-//        while (parent != null && newNode.getData().compareTo(parent.getData()) > 0) {
-//            T temp = newNode.getData();
-//            newNode.setData(parent.getData());
-//            parent.setData(temp);
-//            newNode = parent;
-//            parent = newNode.getParent(root);
-//        }
-//    }
 
     public static void main(String[] args) {
         MaxHeap<Integer> maxHeap = new MaxHeap<>();
@@ -153,7 +133,7 @@ public class MaxHeap<T extends Comparable<T>> {
                 break;
             }
 
-            maxHeap.insertMaxHeap(input);
+            maxHeap.insert(input);
 
             System.out.print("Post-order traversal after insertion: ");
             maxHeap.root.postOrder(maxHeap.root);
