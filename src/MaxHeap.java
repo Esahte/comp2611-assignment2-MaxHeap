@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 class BinaryNodeRevamped<T extends Comparable<T>> {
@@ -101,19 +103,19 @@ public class MaxHeap<T extends Comparable<T>> {
         }
     }
 
-//    public void insertMaxHeap(BinaryNode<T> root, T value) {
-//        BinaryNode<T> newNode = new BinaryNode<>(value);
+//    public void insertMaxHeap(BinaryNodeRevamped<T> root, T value) {
+//        BinaryNodeRevamped<T> newNode = new BinaryNodeRevamped<>(value);
 //
 //        if (root == null) {
 //            this.data = value;
 //            return;
 //        }
 //
-//        List<BinaryNode<T>> queue = new ArrayList<>();
+//        List<BinaryNodeRevamped<T>> queue = new ArrayList<>();
 //        queue.add(root);
 //
 //        while (!queue.isEmpty()) {
-//            BinaryNode<T> currentNode = queue.get(0);
+//            BinaryNodeRevamped<T> currentNode = queue.get(0);
 //
 //            if (currentNode.getLeft() == null) {
 //                currentNode.leftNode = newNode;
@@ -129,7 +131,7 @@ public class MaxHeap<T extends Comparable<T>> {
 //            queue.remove(0);
 //        }
 //
-//        BinaryNode<T> parent = newNode.getParent(root);
+//        BinaryNodeRevamped<T> parent = newNode.getParent(root);
 //        while (parent != null && newNode.getData().compareTo(parent.getData()) > 0) {
 //            T temp = newNode.getData();
 //            newNode.setData(parent.getData());
