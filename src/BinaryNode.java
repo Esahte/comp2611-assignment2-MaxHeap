@@ -2,23 +2,15 @@ public class BinaryNode<T> {
     private T data;
     private BinaryNode<T> left;
     private BinaryNode<T> right;
-    private BinaryNode<T> parent;
 
     public BinaryNode(T data) {
         this.data = data;
     }
 
     public BinaryNode(T data, BinaryNode<T> left, BinaryNode<T> right) {
-        this(data,left,right,null);
-    }
-    public BinaryNode(T data, BinaryNode<T> left) {
-        this(data,left,null,null);
-    }
-    public BinaryNode(T data, BinaryNode<T> left, BinaryNode<T> right, BinaryNode<T> parent) {
         this.data = data;
         this.left = left;
         this.right = right;
-        this.parent = parent;
     }
 
     public T getData() {
@@ -33,10 +25,6 @@ public class BinaryNode<T> {
         return right;
     }
 
-    public BinaryNode<T> getParent() {
-        return parent;
-    }
-
     public void setData(T data) {
         this.data = data;
     }
@@ -47,10 +35,6 @@ public class BinaryNode<T> {
 
     public void setRight(BinaryNode<T> right) {
         this.right = right;
-    }
-
-    public void setParent(BinaryNode<T> parent) {
-        this.parent = parent;
     }
 
     public boolean isLeaf() {
@@ -76,6 +60,17 @@ public class BinaryNode<T> {
             right.postOrderTraversal();
         }
         System.out.println(data);
+    }
+
+    // Create a preOrderTraversal() method that prints the data of the tree in pre-order.
+    public void preOrderTraversal() {
+        System.out.println(data);
+        if (left != null) {
+            left.preOrderTraversal();
+        }
+        if (right != null) {
+            right.preOrderTraversal();
+        }
     }
 
     // Create a toString() method

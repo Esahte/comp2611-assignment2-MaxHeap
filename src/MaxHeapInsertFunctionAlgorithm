@@ -1,0 +1,12 @@
+Start with the root node of the max heap.
+If the root node is null, set the new node as the root and return.
+Compare the value of the new node with the value of the current node.
+If the value of the new node is greater than the value of the current node, swap the values of the new node and the current node.
+Check if the left child of the current node is null.
+If the left child is null, insert the new node as the left child of the current node.
+If the left child is not null, check if the right child is null.
+If the right child is null, insert the new node as the right child of the current node.
+If both the left and right children are present, compare their depth.
+Insert the new node into the most shallow child (left or right).
+Repeat steps 3 to 10, recursively, starting from the child node where you inserted the new node.
+Continue this process until the new node is correctly placed in the max heap.

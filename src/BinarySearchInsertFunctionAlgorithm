@@ -1,0 +1,43 @@
+Here's a step-by-step algorithm for the given code, which inserts a new node into a binary search tree (BST):
+
+### `insert(int value)` Method:
+1. Begin with the public `insert` method, which is called by the user to insert a new value into the BST.
+
+2. Check if the root node (`root`) is null, which means the tree is empty.
+
+3. If the root is null (i.e., the tree is empty):
+    - Create a new `BinaryNode` with the given `value`.
+    - Set this new node as the `root`.
+    - Return, as the insertion is complete.
+
+4. If the root is not null (i.e., the tree is not empty), proceed with the recursive insertion using the `insert(BinaryNode<Integer> root, int value)` method.
+
+### `insert(BinaryNode<Integer> root, int value)` Method (Recursive Insertion):
+1. This is a recursive method to insert the `value` into the BST.
+
+2. Check if the left child of the current `root` node is null.
+   - If it's null, it means this is the appropriate place to insert the new node.
+
+3. If the left child is null:
+   - Check if the `value` is less than the data in the `root` node.
+   - If it is less, swap the `value` with the data in the `root` node to ensure that the new node has a larger value than the root.
+   - Create a new `BinaryNode` with the `value` and set it as the left child of the `root`.
+
+4. If the left child is not null:
+   - Check if the right child of the current `root` node is null.
+   - If it's null, it means this is the appropriate place to insert the new node.
+
+5. If the right child is null:
+   - Check if the `value` is less than the data in the left child of the `root`.
+   - If it is less, swap the `value` with the data in the left child of the `root` to ensure that the new node has a larger value than the left child.
+   - Create a new `BinaryNode` with the `value` and set it as the right child of the `root`.
+
+6. If both the left and right children of the `root` are not null:
+   - Calculate the depth of the left and right subtrees rooted at the current `root`.
+   - Determine whether to insert the new node into the left or right subtree based on their depths.
+     - If the left subtree's depth is less than or equal to the right subtree's depth, insert the new node into the left child (or its subtree).
+     - If the right subtree's depth is greater, insert the new node into the right child (or its subtree).
+
+7. Recursively call the `insert` method on the chosen child node (left or right) to continue the insertion process down the tree.
+
+8. Repeat the above steps until the new node is correctly placed in the BST, ensuring that the BST property (left child is less than the parent, right child is greater) is maintained at each step.

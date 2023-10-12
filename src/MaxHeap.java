@@ -27,50 +27,75 @@ public class MaxHeap {
 
     // recursive insertNode
     private void insertNode(BinaryNode<Integer> currentNode, BinaryNode<Integer> newNode) {
-        if (newNode.getData() > currentNode.getData()) {
-            // Swap the new node with the current node
-            int temp = newNode.getData();
-            newNode.setData(currentNode.getData());
-            currentNode.setData(temp);
-        }
-
-        // Count the number of nodes in the left and right subtrees
-        int leftHeight = countSubtree(currentNode.getLeft());
-        int rightHeight = countSubtree(currentNode.getRight());
-
-        // Move to the child node
-        if (leftHeight <= rightHeight) {
-            // Insert the new node into the left subtree
-            if (currentNode.getLeft() == null) {
-                currentNode.setLeft(newNode);
-                return;
-            }
-            currentNode = currentNode.getLeft();
-        } else {
-            // Insert the new node into the right subtree
-            if (currentNode.getRight() == null) {
-                currentNode.setRight(newNode);
-                return;
-            }
-            currentNode = currentNode.getRight();
-        }
-
         // Check if current node is null after moving to the child node
         if (currentNode == null) {
             return; // No more nodes to traverse
         }
 
-        // Recursively insert the new node
-        insertNode(currentNode, newNode);
+        if (newNode.getData() > currentNode.getData()) {
+            // Swap values if new node is greater than current node
+            int temp = newNode.getData();
+            newNode.setData(currentNode.getData());
+            currentNode.setData(temp);
+        }
+
+        if (currentNode.getLeft() == null) {
+            // If the left child is null, insert the new node as the left child
+            currentNode.setLeft(newNode);
+        } else if (currentNode.getRight() == null) {
+            // If the right child is null, insert the new node as the right child
+            currentNode.setRight(newNode);
+        } else {
+            // Both left and right children exist; compare their depth
+            int leftDepth = depth(currentNode.getLeft());
+            int rightDepth = depth(currentNode.getRight());
+
+            if (leftDepth <= rightDepth) {
+                // Insert into the left child (or subtree)
+                insertNode(currentNode.getLeft(), newNode);
+            } else {
+                // Insert into the right child (or subtree)
+                insertNode(currentNode.getRight(), newNode);
+            }
+        }
     }
 
     // Balance the max heap
-    public int countSubtree(BinaryNode<?> node){
+    public int depth(BinaryNode<?> node){
         if(node == null) {
             return 0;
         }
 
         // Return the number of nodes in the subtree
-        return 1 + countSubtree(node.getLeft()) + countSubtree(node.getRight());
+        return 1 + depth(node.getLeft()) + depth(node.getRight());
+    }
+
+    public static void main(String[]args){
+        // Create a max heap object
+        MaxHeap heap=new MaxHeap();
+
+        // Create a scanner object
+        Scanner scanner=new Scanner(System.in);
+
+        // Prompt the user to enter numbers to insert into the max heap
+        while(true){
+            // Prompt the user to enter a number
+            System.out.print("Enter a number to insert into the heap (or -1 to quit): ");
+            int data=scanner.nextInt();
+
+            // Check if the user entered -1
+            if(data==-1){
+                break;
+            }
+
+            // Insert the new node into the max heap
+            heap.insertNode(new BinaryNode<>(data));
+
+            // Print the max heap after each insertion
+            heap.root.postOrderTraversal();
+        }
+
+        // Close the scanner
+        scanner.close();
     }
 }
