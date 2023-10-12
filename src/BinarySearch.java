@@ -56,7 +56,6 @@ public class BinarySearch {
         }
     }
 
-    // Balance the max heap
     public int depth(BinaryNode<?> node){
         if(node == null) {
             return 0;
