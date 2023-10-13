@@ -36,8 +36,8 @@ public class BinarySearch {
             if (value < root.getData()) {
                 // Swap values if new node is less than left node
                 int temp = value;
-                value = root.getLeft().getData();
-                root.getLeft().setData(temp);
+                value = root.getData();
+                root.setData(temp);
             }
             // Insert the new node here if right is null
             root.setRight(new BinaryNode<>(value));
@@ -82,8 +82,7 @@ public class BinarySearch {
         System.out.print("Enter the number of Integer values: ");
         int n = scanner.nextInt();
 
-        System.out.println("Enter " + n + " integer values:");
-
+        System.out.println("Enter " + n + " integer v
         for (int i = 0; i < n; i++) {
             int value = scanner.nextInt();
             tree.insert(value);
