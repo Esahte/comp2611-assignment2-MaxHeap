@@ -24,7 +24,7 @@ public class BinarySearch {
         // Check if the left node is null
         if (root.getLeft() == null) {
             // Check if the new node is less than the root node
-            if (value < root.getData()) {
+            if (value > root.getData()) {
                 // Swap values if new node is less than root node
                 int temp = value;
                 value = root.getData();
@@ -33,7 +33,7 @@ public class BinarySearch {
             root.setLeft(new BinaryNode<>(value));
         } else if (root.getRight() == null) {
             // Check if the left node is less than the new node
-            if (value < root.getLeft().getData()) {
+            if (value < root.getData()) {
                 // Swap values if new node is less than left node
                 int temp = value;
                 value = root.getLeft().getData();
